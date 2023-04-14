@@ -31,6 +31,36 @@ services:
       - postgres
     restart: unless-stopped
 
+  backend:
+    container_name: vetapp-backend
+    image: node:16.14
+    command: "tail -f /dev/null"
+    environment:
+      DB_HOST: vetapp-postgres
+      HL7_HOST: 0.0.0.0
+    working_dir: /var/vetapp-backend
+    volumes:
+       - ../vetapp-backend:/var/vetapp-backend
+    ports:
+      - "3001:3001"
+      - "7777:7777"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  frontend:
+    container_name: vetapp-frontend
+    image: node:16.14
+    command: "tail -f /dev/null"
+    working_dir: /var/vetapp-frontend
+    volumes:
+       - ../vetapp-frontend:/var/vetapp-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - postgres
+    restart: unless-stopped
+
 networks:
   postgres:
     driver: bridge
