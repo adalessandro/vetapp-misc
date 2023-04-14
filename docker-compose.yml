@@ -34,7 +34,7 @@ services:
   backend:
     container_name: vetapp-backend
     image: node:16.14
-    command: "tail -f /dev/null"
+    command: bash -c "npm i && npm run start:dev"
     environment:
       DB_HOST: vetapp-postgres
       HL7_HOST: 0.0.0.0
@@ -51,7 +51,7 @@ services:
   frontend:
     container_name: vetapp-frontend
     image: node:16.14
-    command: "tail -f /dev/null"
+    command: bash -c "npm i && npm start"
     working_dir: /var/vetapp-frontend
     volumes:
        - ../vetapp-frontend:/var/vetapp-frontend
